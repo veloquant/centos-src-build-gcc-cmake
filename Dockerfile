@@ -35,7 +35,7 @@ RUN mv /bin/gcc /bin/gcc-$(/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d
     ln -s /usr/local/bin/g++ /usr/bin/g++ && \
     ln -sfr /bin/g++ /bin/c++
 
-RUN yum install -y zlib-devel && yum clean -y all
+RUN yum install -y libcurl libcurl-devel zlib-devel && yum clean -y all
 
 ARG CMAKE_VERSION=3.14.2
 
