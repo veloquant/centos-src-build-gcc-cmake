@@ -13,12 +13,15 @@ RUN wget -nv http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/
     mkdir gcc-${GCC_VERSION}-build && \
     cd gcc-${GCC_VERSION}-build && \
     ../gcc-${GCC_VERSION}/configure --enable-languages=c,c++ --disable-multilib && \
-    make -j$(nproc)
-
-# FIXME: Work around LIBCXX issue which causes this to fail.
-
-RUN make install && \
-    gcc --version | grep -F " ${GCC_VERSION} " && \
+    make -j$(nproc) && \
+    cp `readlink -f x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6` /usr/local/lib64/ && \
+    cp -l /usr/local/lib64/`readlink -f x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6 | xargs basename` /usr/lib64/ && \
+    ln -sfr \
+        /usr/lib64/`readlink -f x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6 | xargs basename` \
+        /usr/lib64/libstdc++.so.6 && \
+    make install && \
+    gcc --version | grep -F " ${GCC_VERSION}" && \
+    cd .. \
     rm -rf gcc-${GCC_VERSION}.tar.gz gcc-${GCC_VERSION} gcc-${GCC_VERSION}-build
 
 ARG CMAKE_VERSION=3.14.2
