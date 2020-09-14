@@ -24,6 +24,17 @@ RUN wget -nv http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/
     cd .. && \
     rm -rf gcc-${GCC_VERSION}.tar.gz gcc-${GCC_VERSION} gcc-${GCC_VERSION}-build
 
+# Make the new GCC default
+RUN mv /bin/gcc /bin/gcc-$(/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
+    ln -s /usr/local/bin/gcc /bin/gcc && \
+    mv /bin/g++ /bin/g++-$(/bin/g++ -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
+    ln -s /usr/local/bin/g++ /bin/g++ && \
+    mv /usr/bin/gcc /usr/bin/gcc-$(/usr/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
+    ln -s /usr/local/bin/gcc /usr/bin/gcc && \
+    mv /usr/bin/g++ /usr/bin/g++-$(/usr/bin/g++ -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
+    ln -s /usr/local/bin/g++ /usr/bin/g++ && \
+    ln -sfr /bin/g++ /bin/c++
+
 ARG CMAKE_VERSION=3.14.2
 
 RUN wget -nv -c https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz && \
