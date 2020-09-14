@@ -2,7 +2,9 @@ ARG BASE_IMAGE=yitzikc/centos-cpp-eclipse-dev:centos-7.8-ec-2020-06
 
 FROM $BASE_IMAGE
 
-RUN yum install -y gmp-devel mpfr-devel libmpc-devel && yum clean -y all
+RUN yum install -y \
+        gmp-devel mpfr-devel libmpc-devel libcurl libcurl-devel zlib-devel openssl-libs openssl-devel && \
+    yum clean -y all
 
 WORKDIR /usr/src
 
@@ -34,8 +36,6 @@ RUN mv /bin/gcc /bin/gcc-$(/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d
     mv /usr/bin/g++ /usr/bin/g++-$(/usr/bin/g++ -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
     ln -s /usr/local/bin/g++ /usr/bin/g++ && \
     ln -sfr /bin/g++ /bin/c++
-
-RUN yum install -y libcurl libcurl-devel zlib-devel && yum clean -y all
 
 ARG CMAKE_VERSION=3.14.2
 
