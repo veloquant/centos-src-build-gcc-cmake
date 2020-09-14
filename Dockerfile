@@ -37,7 +37,7 @@ RUN wget -nv -c https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERS
     cd .. \
     rm -rf cmake-${CMAKE_VERSION}.tar.gz cmake-${CMAKE_VERSION}
 
-LABEL org.gnu.gcc.version GCC_VERSION
+LABEL org.gnu.gcc.version $GCC_VERSION
 LABEL org.cmake.version $CMAKE_VERSION
 
 WORKDIR /root
