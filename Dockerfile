@@ -21,7 +21,7 @@ RUN wget -nv http://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/releases/
         /usr/lib64/libstdc++.so.6 && \
     make install && \
     gcc --version | grep -F " ${GCC_VERSION}" && \
-    cd .. \
+    cd .. && \
     rm -rf gcc-${GCC_VERSION}.tar.gz gcc-${GCC_VERSION} gcc-${GCC_VERSION}-build
 
 ARG CMAKE_VERSION=3.14.2
@@ -34,7 +34,7 @@ RUN wget -nv -c https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERS
     gmake install && \
     ln -sf /usr/local/bin/cmake /usr/bin/ && \
     cmake --version | fgrep -F " ${CMAKE_VERSION}" && \
-    cd .. \
+    cd .. && \
     rm -rf cmake-${CMAKE_VERSION}.tar.gz cmake-${CMAKE_VERSION}
 
 LABEL org.gnu.gcc.version $GCC_VERSION
