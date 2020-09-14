@@ -35,12 +35,14 @@ RUN mv /bin/gcc /bin/gcc-$(/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d
     ln -s /usr/local/bin/g++ /usr/bin/g++ && \
     ln -sfr /bin/g++ /bin/c++
 
+RUN yum install -y zlib-devel && yum clean -y all
+
 ARG CMAKE_VERSION=3.14.2
 
 RUN wget -nv -c https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.tar.gz && \
     tar xvf cmake-${CMAKE_VERSION}.tar.gz && \
     cd cmake-${CMAKE_VERSION}/ && \
-    ./bootstrap && \
+    ./bootstrap --system-curl && \
     gmake -j$(nproc) && \
     gmake install && \
     ln -sf /usr/local/bin/cmake /usr/bin/ && \
