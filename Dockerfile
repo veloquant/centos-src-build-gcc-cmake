@@ -46,7 +46,7 @@ RUN wget -nv -c https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERS
     gmake -j$(nproc) && \
     gmake install && \
     ln -sf /usr/local/bin/cmake /usr/bin/ && \
-    cmake --version | fgrep -F " ${CMAKE_VERSION}" && \
+    cmake --version | grep -F " ${CMAKE_VERSION}" && \
     cd .. && \
     rm -rf cmake-${CMAKE_VERSION}.tar.gz cmake-${CMAKE_VERSION}
 
