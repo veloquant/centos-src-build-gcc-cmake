@@ -31,9 +31,9 @@ RUN mv /bin/gcc /bin/gcc-$(/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d
     ln -s /usr/local/bin/gcc /bin/gcc && \
     mv /bin/g++ /bin/g++-$(/bin/g++ -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
     ln -s /usr/local/bin/g++ /bin/g++ && \
-    mv /usr/bin/gcc /usr/bin/gcc-$(/usr/bin/gcc -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
+    mv /usr/bin/gcc /usr/bin/gcc-$(/usr/bin/gcc -v 2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
     ln -s /usr/local/bin/gcc /usr/bin/gcc && \
-    mv /usr/bin/g++ /usr/bin/g++-$(/usr/bin/g++ -v  2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
+    mv /usr/bin/g++ /usr/bin/g++-$(/usr/bin/g++ -v 2>&1 | grep -oP 'version\s+\S+' | cut -d' ' -f2) && \
     ln -s /usr/local/bin/g++ /usr/bin/g++ && \
     ln -sfr /bin/g++ /bin/c++
 
