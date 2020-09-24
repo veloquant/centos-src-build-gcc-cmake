@@ -1,0 +1,18 @@
+#!/bin/bash
+
+CENTOS_VERSION=`docker inspect $IMAGE_NAME -f '{{index (.ContainerConfig.Labels) "org.centos.version"}}'`
+GCC_VERSION=`docker inspect $IMAGE_NAME -f '{{index (.ContainerConfig.Labels) "org.gnu.gcc.version"}}'`
+CMAKE_VERSION=`docker inspect $IMAGE_NAME -f '{{index (.ContainerConfig.Labels) "org.cmake.version"}}'`
+
+EXPECTED_TAG_FULL=centos-${CENTOS_VERSION}-gcc-${GCC_VERSION}-cmake-${CMAKE_VERSION}
+if [ "$EXPECTED_TAG_FULL" != "$DOCKER_TAG" ] ; then
+    docker tag $IMAGE_NAME ${DOCKER_REPO}:${EXPECTED_TAG_FULL}
+    docker push ${DOCKER_REPO}:${EXPECTED_TAG_FULL}
+fi
+
+CENTOS_VERSION_SHORT=`echo $CENTOS_VERSION | cut -d. -f1-2`
+EXPECTED_TAG_SHORT=centos-${CENTOS_VERSION_SHORT}-gcc-${GCC_VERSION}-cmake-${CMAKE_VERSION}
+if [ "$EXPECTED_TAG_SHORT" != "$EXPECTED_TAG_FULL" ] ; then
+    docker tag ${DOCKER_REPO}:${EXPECTED_TAG_FULL} ${DOCKER_REPO}:${EXPECTED_TAG_SHORT}
+    docker push ${DOCKER_REPO}:${EXPECTED_TAG_SHORT}
+fi
