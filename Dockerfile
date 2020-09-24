@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=yitzikc/centos-cpp-eclipse-dev:centos-7.8.2003-ec-2020-06
+ARG BASE_IMAGE=yitzikc/centos-cpp-eclipse-dev:centos-7.8-ec-2020-06
 
 FROM $BASE_IMAGE
 
