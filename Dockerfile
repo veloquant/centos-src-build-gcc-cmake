@@ -3,7 +3,13 @@ ARG BASE_IMAGE=yitzikc/centos-cpp-eclipse-dev:centos-7.8.2003-ec-2020-06
 FROM $BASE_IMAGE
 
 RUN yum install -y \
-        gmp-devel mpfr-devel libmpc-devel libcurl libcurl-devel zlib-devel openssl-libs openssl-devel && \
+        redhat-lsb \
+        gmp-devel \
+        mpfr-devel \
+        libmpc-devel \
+        libcurl libcurl-devel \
+        zlib-devel \
+        openssl-libs openssl-devel && \
     yum clean -y all
 
 WORKDIR /usr/src
